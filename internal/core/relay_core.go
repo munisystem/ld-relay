@@ -207,7 +207,8 @@ func (r *RelayCore) AddEnvironment(
 				}
 				return nil
 			},
-			Transport: transport,
+			FlushInterval: -1,
+			Transport:     transport,
 		}
 	}
 
