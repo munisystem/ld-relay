@@ -7,6 +7,7 @@ require (
 	contrib.go.opencensus.io/exporter/stackdriver v0.13.6
 	github.com/DataDog/datadog-go v3.7.2+incompatible // indirect
 	github.com/DataDog/opencensus-go-exporter-datadog v0.0.0-20210527074920-9baf37265e83
+	github.com/PuerkitoBio/rehttp v1.1.0 // indirect
 	github.com/antihax/optional v1.0.0
 	github.com/armon/go-metrics v0.3.9 // indirect
 	github.com/aws/aws-sdk-go v1.40.45

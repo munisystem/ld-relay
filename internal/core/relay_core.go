@@ -22,7 +22,7 @@ import (
 	"gopkg.in/launchdarkly/go-sdk-common.v2/ldlog"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
-	"github.com/gregjones/httpcache"
+	"github.com/PuerkitoBio/rehttp"
 )
 
 var (
@@ -186,7 +186,11 @@ func (r *RelayCore) AddEnvironment(
 		jsClientContext.Origins = envConfig.AllowedOrigin.Values()
 		jsClientContext.Headers = envConfig.AllowedHeader.Values()
 
-		cachingTransport := httpcache.NewMemoryCacheTransport()
+		transport := rehttp.NewTransport(
+			nil,
+			rehttp.RetryAll(rehttp.RetryMaxRetries(3), rehttp.RetryTemporaryErr()),
+			rehttp.ConstDelay(time.Second),
+		)
 		jsClientContext.Proxy = &httputil.ReverseProxy{
 			Director: func(req *http.Request) {
 				url := req.URL
@@ -203,7 +207,7 @@ func (r *RelayCore) AddEnvironment(
 				}
 				return nil
 			},
-			Transport: cachingTransport,
+			Transport: transport,
 		}
 	}
 
